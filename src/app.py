@@ -1,6 +1,8 @@
 from flask import Flask, make_response, jsonify
 from flask_cors import CORS, cross_origin
 from config.Config import DevelopmentConfig
+from flask_sqlalchemy import SQLAlchemy
+
 
 configuration = DevelopmentConfig()
 
@@ -10,13 +12,14 @@ app.config['SQLALCHEMY_DATABASE_URI'] = (
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 CORS(app)
+db = SQLAlchemy(app)
 
 
 @cross_origin
 @app.route('/')
 def home() -> dict:
-    from controllers.Roles import RolesController
     response: dict = {}
+    from controllers.Roles import RolesController
     rol = RolesController()
     roles, code = rol.get_roles()
 
