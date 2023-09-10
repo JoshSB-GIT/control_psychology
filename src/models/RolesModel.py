@@ -1,4 +1,4 @@
-from app import db
+from db.db import db
 
 class RolesModel(db.Model):
     __tablename__ = 'roles'
