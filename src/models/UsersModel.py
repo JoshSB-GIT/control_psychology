@@ -1,4 +1,5 @@
 from db.db import db
+from models.DocumentTypeModel import DocumentTypeModel
 
 class UsersModel(db.Model):
     __tablename__ = 'users'
@@ -11,7 +12,7 @@ class UsersModel(db.Model):
     age = db.Column(db.Integer)
     telephone = db.Column(db.String(255))
     phone = db.Column(db.String(255))
-    document_type_id = db.Column(db.Integer, db.ForeignKey('document_type.document_type_id', ondelete='CASCADE', onupdate='CASCADE'))
+    document_type_id = db.Column(db.Integer, db.ForeignKey(DocumentTypeModel.document_type_id, ondelete='CASCADE', onupdate='CASCADE' ))
     rol_id = db.Column(db.Integer, db.ForeignKey('roles.rol_id', ondelete='CASCADE', onupdate='CASCADE'))
     username = db.Column(db.String(255))
     password = db.Column(db.String(255))
@@ -19,16 +20,18 @@ class UsersModel(db.Model):
     created_at = db.Column(db.TIMESTAMP, server_default=db.func.current_timestamp())
     updated_at = db.Column(db.DATETIME, server_default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
     
-    def __init__(self, kwargs):
-        self.name = kwargs['name']
-        self.middlename = kwargs.get('middlename')
-        self.first_lastname = kwargs.get('first_lastname')
-        self.second_lastname = kwargs.get('second_lastname')
-        self.identification = kwargs.get('identification')
-        self.age = kwargs.get('age')
-        self.telephone = kwargs.get('telephone')
-        self.phone = kwargs.get('phone')
-        self.document_type_id = kwargs.get('document_type_id')
-        self.rol_id = kwargs.get('rol_id')
-        self.username = kwargs.get('username')
-        self.password = kwargs.get('password')
+    def __init__(self, name, middlename, first_lastname, second_lastname,
+             identification, age, telephone, phone,
+             document_type_id, rol_id, username, password):
+        self.name = name
+        self.middlename = middlename
+        self.first_lastname = first_lastname
+        self.second_lastname = second_lastname
+        self.identification = identification
+        self.age = age
+        self.telephone = telephone
+        self.phone = phone
+        self.document_type_id = document_type_id
+        self.rol_id = rol_id
+        self.username = username
+        self.password = password

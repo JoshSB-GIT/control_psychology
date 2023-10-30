@@ -9,6 +9,6 @@ class RolesModel(db.Model):
     created_at = db.Column(db.TIMESTAMP, server_default=db.func.current_timestamp())
     updated_at = db.Column(db.DATETIME, server_default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
     
-    def __init__(self, kwargs):
-        self.name = kwargs['name']
-        self.description = kwargs['description']
+    def __init__(self, name, description):
+        self.name = name
+        self.description = description
