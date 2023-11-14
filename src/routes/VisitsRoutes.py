@@ -113,7 +113,6 @@ def update_visit() -> dict:
 
     visit_id = data.get('visit_id', None)
     notes = data.get('notes', None)
-    status = data.get('status', None)
     created_at = data.get('created_at', None)
     updated_at = data.get('updated_at', None)
     visit_date = data.get('visit_date', None)
@@ -125,7 +124,6 @@ def update_visit() -> dict:
 
         if visit:
             visit.notes = notes
-            visit.status = status
             visit.created_at = created_at
             visit.updated_at = updated_at
             visit.visit_date = visit_date

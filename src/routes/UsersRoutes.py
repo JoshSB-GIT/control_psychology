@@ -17,32 +17,33 @@ def get_users() -> dict:
         list_user: list[dict] = []
         for user in users:
             response = {
-            'user_id': user.user_id,
-            'name': user.name,
-            'middlename': user.middlename,
-            'first_lastname': user.first_lastname,
-            'second_lastname': user.second_lastname,
-            'identification': user.identification,
-            'age': user.age,
-            'telephone': user.telephone,
-            'phone': user.phone,
-            'document_type_id': user.document_type_id,
-            'rol_id': user.rol_id,
-            'username': user.username,
-            'password': user.password,
-        }
+                'user_id': user.user_id,
+                'name': user.name,
+                'middlename': user.middlename,
+                'first_lastname': user.first_lastname,
+                'second_lastname': user.second_lastname,
+                'identification': user.identification,
+                'age': user.age,
+                'telephone': user.telephone,
+                'phone': user.phone,
+                'document_type_id': user.document_type_id,
+                'rol_id': user.rol_id,
+                'username': user.username,
+                'password': user.password,
+            }
             list_user.append(response)
         
         response = list_user, 200
         
         if data:
             key = list(data.keys())[0]
-            
+            aux_list = []
             if key:
                 value = data.get(key, None)
                 for rol in list_user:
                     if rol[key] == value:
-                        response = rol, 200
+                        aux_list.append(rol)
+                response = aux_list, 200
             else:
                 response = 'No se encontró el campo', 401
         

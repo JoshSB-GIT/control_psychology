@@ -12,6 +12,7 @@ def get_roles() -> dict:
     data = request.json
     response: tuple = 'No se encontraron roles', 401
     roles = RolesModel.query.filter(RolesModel.status == 1).all()
+    print(data)
 
     if roles:
         list_roles: list[dict] = []
@@ -91,10 +92,11 @@ def delete_rol() -> dict:
 @roles_bp.route('/update_rol', methods=['PUT'])
 def update_rol() -> dict:
     data = request.json
-    response: tuple = 'Ocurrió un error al actualizar', 401
+    response: tuple = 'Ocurrió un error al actualizar', 400
     rol_id = data.get('rol_id', None)
     name = data.get('name', None)
     description = data.get('description', None)
+    print(data)
     if name and description:
         rol = RolesModel.query.filter(RolesModel.rol_id == rol_id).first()
         if rol:
@@ -103,8 +105,9 @@ def update_rol() -> dict:
             db.session.commit()
             response = 'Rol actualizado correctamente!', 200
         else:
-            response = 'No se encontró el rol', 401
+            response = 'No se encontró el rol', 400
         
     res, code = response
+    print(f'{res}')
 
     return make_response(jsonify({'data': res}), code)

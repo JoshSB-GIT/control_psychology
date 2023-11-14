@@ -6,6 +6,7 @@ from db.db import db
 
 citations_dp = Blueprint('citations', __name__)
 
+
 @cross_origin
 @citations_dp.route('/get_citations', methods=['POST'])
 def get_citations() -> dict:
@@ -34,6 +35,7 @@ def get_citations() -> dict:
 
     return make_response(jsonify({'data': res}), code)
 
+
 @cross_origin
 @citations_dp.route('/add_citation', methods=['POST'])
 def add_citation() -> dict:
@@ -42,13 +44,11 @@ def add_citation() -> dict:
     if data:
         citation_date = data.get('citation_date', None)
         description = data.get('description', None)
-        status = data.get('status', None)
         psychologist_id = data.get('psychologist_id', None)
         patient_id = data.get('patient_id', None)
         citation = CitationsModel(
             citation_date=citation_date,
             description=description,
-            status=status,
             psychologist_id=psychologist_id,
             patient_id=patient_id
         )
@@ -65,12 +65,12 @@ def add_citation() -> dict:
             'citation_id': res.citation_id,
             'citation_date': res.citation_date,
             'description': res.description,
-            'status': res.status,
             'psychologist_id': res.psychologist_id,
             'patient_id': res.patient_id,
             'created_at': res.created_at,
             'updated_at': res.updated_at
         }), code)
+
 
 @cross_origin
 @citations_dp.route('/delete_citation', methods=['PUT'])
@@ -94,6 +94,7 @@ def delete_citation() -> dict:
 
     return make_response(jsonify({'data': res}), code)
 
+
 @cross_origin
 @citations_dp.route('/update_citation', methods=['PUT'])
 def update_citation() -> dict:
@@ -103,7 +104,6 @@ def update_citation() -> dict:
     citation_id = data.get('citation_id', None)
     citation_date = data.get('citation_date', None)
     description = data.get('description', None)
-    status = data.get('status', None)
     psychologist_id = data.get('psychologist_id', None)
     patient_id = data.get('patient_id', None)
 
@@ -111,13 +111,14 @@ def update_citation() -> dict:
         citation = CitationsModel.query.get(citation_id)
 
         if citation:
+
             citation.citation_date = citation_date
             citation.description = description
-            citation.status = status
             citation.psychologist_id = psychologist_id
             citation.patient_id = patient_id
 
             try:
+
                 db.session.commit()
                 response = 'Cita actualizada correctamente!', 200
             except Exception as e:
